@@ -1,0 +1,59 @@
+{
+  "short_name": "Eleventy Website Template",
+  "name": "A starter repository showing how to build a website with the Eleventy static site generator.",
+  "start_url": "/?source=pwa",
+  "background_color": "#222222",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#222222",
+  "icons": [
+    {
+      "src": "/images/icons/Icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/images/icons/Icon-100.png",
+      "sizes": "100x100",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/images/icons/Icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/images/icons/Icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/images/icons/Icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/images/icons/Icon-196.png",
+      "sizes": "196x196",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/images/icons/Icon-256.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/images/icons/Icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}

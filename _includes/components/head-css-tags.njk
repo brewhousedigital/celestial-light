@@ -1,0 +1,9 @@
+<style>
+	{% set css %}
+	{% include "_includes/css/taurus.css" %}
+	{% include "_includes/css/styles.css" %}
+	{% include "_includes/css/media-max-1200.css" %}
+	{% include "_includes/css/media-max-768.css" %}
+	{% endset %}
+	{{ css | minifyCSS | safe }}
+</style>
