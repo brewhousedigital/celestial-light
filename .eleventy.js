@@ -89,6 +89,7 @@ module.exports = function(eleventyConfig) {
 	});
 
 	eleventyConfig.addShortcode("dateYear", function() {
+		/* {% dateYear %} */
 		return DateTime.local().toFormat("yyyy");
 	});
 
