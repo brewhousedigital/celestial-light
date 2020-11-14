@@ -22,7 +22,7 @@ module.exports = function(eleventyConfig) {
 
 	eleventyConfig.setDataDeepMerge(true);
 
-	eleventyConfig.addLayoutAlias("post", "layouts/post.njk");
+	eleventyConfig.addLayoutAlias("post", "source/layouts/post.njk");
 
 	eleventyConfig.addFilter("readableDate", dateObj => {
 		return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat("dd LLL yyyy");
@@ -157,8 +157,8 @@ module.exports = function(eleventyConfig) {
 		// These are all optional, defaults are shown:
 		dir: {
 			input: ".",
-			includes: "_includes",
-			data: "_data",
+			includes: "source/_includes",
+			data: "source/_data",
 			output: "_site"
 		}
 	};
