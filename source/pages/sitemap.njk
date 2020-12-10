@@ -1,14 +1,29 @@
 ---
-permalink: /sitemap.xml
-eleventyExcludeFromCollections: true
+pagination:
+  data: collections.all
+  size: 20
+  alias: entries
+layout: layouts/base.njk
+title: "Sitemap"
+permalink: /page-list/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber }}/{% endif %}
 ---
-<?xml version="1.0" encoding="utf-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-{%- for page in collections.all %}
-  {% set absoluteUrl %}{{ page.url | url | absoluteUrl(metadata.url) }}{% endset %}
-  <url>
-    <loc>{{ absoluteUrl }}</loc>
-    <lastmod>{{ page.date | htmlDateString }}</lastmod>
-  </url>
-{%- endfor %}
-</urlset>
+
+
+<div class="container">
+	<h1>Sitemap</h1>
+
+	<div>
+		{% for entry in entries %}
+			<p class="">
+				<span class="font-weight-bold">
+				{% if entry.data.title.length > 0 %}
+					{{ entry.data.title }}
+				{% else %}
+					Missing Page Title
+				{% endif %}
+				</span>
+				<a href="{{ entry.url }}"><code>{{ entry.url }}</code></a>
+			</p>
+		{% endfor %}
+	</div><!-- list of pages -->
+</div><!-- end container -->

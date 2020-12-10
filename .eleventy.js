@@ -100,6 +100,8 @@ module.exports = function(eleventyConfig) {
 
 	eleventyConfig.addPassthroughCopy({"source/images": "images"});
 	eleventyConfig.addPassthroughCopy({"source/manifest.json": "manifest.json"});
+	eleventyConfig.addPassthroughCopy({"source/_includes/partial-css/bootstrap.css": "css/bootstrap.css"});
+	eleventyConfig.addPassthroughCopy({"source/_includes/partial-js/bootstrap.js": "js/bootstrap.js"});
 
 
 
