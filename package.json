@@ -33,6 +33,7 @@
     "slugify": "^1.4.5"
   },
   "dependencies": {
+    "bootstrap-icons": "^1.2.1",
     "clean-css": "^4.2.3",
     "markdown-it": "^11.0.1"
   }

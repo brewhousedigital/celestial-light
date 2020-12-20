@@ -93,6 +93,11 @@ module.exports = function(eleventyConfig) {
 		return DateTime.local().toFormat("yyyy");
 	});
 
+	eleventyConfig.addShortcode("icon", function(name) {
+		/* {% icon house %} */
+		let iconName = "node_modules/bootstrap-icons/icons/" + name + ".svg";
+		return fs.readFileSync(iconName).toString();
+	});
 
 
 
