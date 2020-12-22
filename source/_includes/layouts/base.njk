@@ -13,24 +13,13 @@
 </head>
 <body>
 
-<header class="container">
-	<div class="row justify-content-between py-3 mb-5">
-		<h1 class="home"><a href="{{ '/' | url }}">{{ metadata.title }}</a></h1>
-
-		<div>
-			<a href="/posts/" class="btn btn-primary">Posts</a>
-			<a href="/about/" class="btn btn-primary">About</a>
-		</div>
-	</div><!-- end row -->
-</header><!-- end container -->
+{% include "source/_includes/components/header.njk" %}
 
 <main>
 	{{ content | safe }}
 </main>
 
-<footer></footer>
-
-
+{% include "source/_includes/components/footer.njk" %}
 
 {% include "source/_includes/components/footer-js-tags.njk" %}
 
