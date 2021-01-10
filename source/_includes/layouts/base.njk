@@ -7,21 +7,21 @@
 	<title>{{ title }} | {{ metadata.title }}</title>
 	<meta name="description" content="{{ description or metadata.description }}">
 
-	{% include "source/_includes/components/head-meta-tags.njk" %}
+	{% include "source/_includes/site-components/head-meta-tags.njk" %}
 
-	{% include "source/_includes/components/head-css-tags.njk" %}
+	{% include "source/_includes/site-components/head-css-tags.njk" %}
 </head>
 <body>
 
-{% include "source/_includes/components/header.njk" %}
+{% include "source/_includes/site-components/header.njk" %}
 
 <main>
 	{{ content | safe }}
 </main>
 
-{% include "source/_includes/components/footer.njk" %}
+{% include "source/_includes/site-components/footer.njk" %}
 
-{% include "source/_includes/components/footer-js-tags.njk" %}
+{% include "source/_includes/site-components/footer-js-tags.njk" %}
 
 </body>
 </html>

@@ -6,11 +6,18 @@ permalink: /
 
 
 <div class="container">
-	<h1>Latest 3 Posts</h1>
+	<h1 class="mb-5">You are running an awesome 11ty site</h1>
 
-	{% set postslist = collections.posts | head(-3) %}
-	{% set postslistCounter = collections.posts | length %}
-	{% include "postslist.njk" %}
+	<div class="row pb-5 border-bottom mb-5">
+		<div class="col-lg-6">
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur aliquet ipsum lacus, non finibus nisi congue quis. Phasellus gravida justo id metus aliquam pretium. Proin rhoncus pretium ligula, at semper felis feugiat et. Nulla vestibulum leo ex, non molestie sem tempor vel. Integer vel accumsan dolor. Suspendisse quam quam, bibendum eu ullamcorper eget, imperdiet at felis. Quisque at ultricies odio. Etiam sollicitudin eros ut risus molestie tristique. Nam ullamcorper ut quam et mollis.</p>
+		</div><!-- end col -->
 
-	<p>More posts can be found in <a href="{{ '/posts/' | url }}">the archive</a>.</p>
+		<div class="col-lg-6">
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur aliquet ipsum lacus, non finibus nisi congue quis. Phasellus gravida justo id metus aliquam pretium. Proin rhoncus pretium ligula, at semper felis feugiat et. Nulla vestibulum leo ex, non molestie sem tempor vel. Integer vel accumsan dolor. Suspendisse quam quam, bibendum eu ullamcorper eget, imperdiet at felis. Quisque at ultricies odio. Etiam sollicitudin eros ut risus molestie tristique. Nam ullamcorper ut quam et mollis.</p>
+		</div><!-- end col -->
+	</div><!-- end row -->
+
+	{# This is an example of a page component #}
+	{% include 'source/pages/page-components/latest-3-posts.njk' %}
 </div><!-- end container -->
