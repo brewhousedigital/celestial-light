@@ -1,6 +1,6 @@
 # eleventy-site-template
 
-A starter repository showing how to build a website with the [Eleventy](https://github.com/11ty/eleventy) static site generator..
+A starter repository showing how to build a website with the [Eleventy](https://github.com/11ty/eleventy) static site generator.
 
 
 ## Demos
