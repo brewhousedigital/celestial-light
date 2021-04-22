@@ -100,6 +100,41 @@ module.exports = function(eleventyConfig) {
 	});
 
 
+	// Accordion Code | Nunjucks Paired Shortcode
+	// Easily create accordions without having to write tons of bootstrap HTML
+	// {% accordion "Tab 1", "#my-accordion" %}
+	// 		Content Goes Here
+	// {% endaccordion %}
+	eleventyConfig.addPairedNunjucksShortcode("accordion", function(content, title, parent) {
+		let accordionID = slugify(title, {
+			replacement: '-',
+			remove: undefined,
+			lower: true,
+			strict: true
+		});
+
+		return `
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="accordion-header-${accordionID}">
+				<button class="accordion-button collapsed"
+					    type="button"
+					    data-bs-toggle="collapse"
+					    data-bs-target="#accordion-${accordionID}"
+					    aria-expanded="false"
+					    aria-controls="accordion-${accordionID}">${title}</button>
+			</h2>
+
+			<div id="accordion-${accordionID}"
+				 class="accordion-collapse collapse"
+				 aria-labelledby="accordion-header-${accordionID}"
+				 data-bs-parent="${parent}">
+				<div class="accordion-body">
+					${content}
+				</div><!-- end padding -->
+			</div><!-- end collapse -->
+		</div><!-- end item -->
+		`;
+	});
 
 
 
