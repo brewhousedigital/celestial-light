@@ -7,40 +7,40 @@ const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 
 
-
 // Custom additions
+require('dotenv').config();
 const MinifyCSS = require("clean-css");
 const slugify = require("slugify");
-
-
+const postCSS = require('postcss');
+const purgeCSS = require('@fullhuman/postcss-purgecss');
+const { minify } = require("terser");
 
 
 module.exports = function(eleventyConfig) {
 	eleventyConfig.addPlugin(pluginRss);
 	eleventyConfig.addPlugin(pluginSyntaxHighlight);
 	eleventyConfig.addPlugin(pluginNavigation);
-
 	eleventyConfig.setDataDeepMerge(true);
-
 	eleventyConfig.addLayoutAlias("post", "source/layouts/post.njk");
+
 
 	eleventyConfig.addFilter("readableDate", dateObj => {
 		return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat("dd LLL yyyy");
 	});
+
 
 	// https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
 	eleventyConfig.addFilter('htmlDateString', (dateObj) => {
 		return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat('yyyy-LL-dd');
 	});
 
+
 	// Get the first `n` elements of a collection.
 	eleventyConfig.addFilter("head", (array, n) => {
-		if( n < 0 ) {
-			return array.slice(n);
-		}
-
+		if( n < 0 ) {return array.slice(n);}
 		return array.slice(0, n);
 	});
+
 
 	eleventyConfig.addCollection("tagList", function(collection) {
 		let tagSet = new Set();
@@ -72,13 +72,20 @@ module.exports = function(eleventyConfig) {
 	});
 
 
-
-
-	// Custom
+	// Custom - Extended
+	// Minify CSS
 	eleventyConfig.addFilter("minifyCSS", function(code) {
-		return new MinifyCSS({}).minify(code).styles;
+		return new MinifyCSS({
+			level: {
+				1: {
+					specialComments: 0
+				}
+			}
+		}).minify(code)['styles'];
 	});
 
+
+	// Creates a URL safe string
 	eleventyConfig.addFilter("slugURL", function(urlString) {
 		return slugify(urlString, {
 			replacement: '-',
@@ -88,11 +95,15 @@ module.exports = function(eleventyConfig) {
 		});
 	});
 
+
+	// Returns the current year
 	eleventyConfig.addShortcode("dateYear", function() {
 		/* {% dateYear %} */
 		return DateTime.local().toFormat("yyyy");
 	});
 
+
+	// Returns a bootstrap icon
 	eleventyConfig.addShortcode("icon", function(name) {
 		/* {% icon house %} */
 		let iconName = "node_modules/bootstrap-icons/icons/" + name + ".svg";
@@ -137,13 +148,71 @@ module.exports = function(eleventyConfig) {
 	});
 
 
+	// Minify JS in production
+	eleventyConfig.addNunjucksAsyncFilter("jsmin", async function (
+		code,
+		callback
+	) {
+		try {
+			if(process.env.ENVIRONMENT === "production") {
+				const minified = await minify(code);
+				callback(null, minified.code);
+			} else {
+				callback(null, code);
+			}
+		} catch (err) {
+			console.error("Terser error: ", err);
+			// Fail gracefully.
+			callback(null, code);
+		}
+	});
 
+
+	// Create a custom, purged, version of Bootstrap
+	let sourceCSS = "source/_includes/partial-css/_bootstrap.css";
+	let destinationCSS = "source/_includes/partial-css/_bootstrap-compiled.css";
+	// Add in your file types here
+	let sourceContent = [
+		'source/**/*.njk',
+		'source/**/*.html',
+		'source/**/*.md',
+		'source/**/*.liquid',
+		'source/**/*.js'
+	];
+
+	fs.readFile(sourceCSS, (err, css) => {
+		postCSS([
+			// Purge CSS will scan through and remove the styles that arent in your files
+			purgeCSS({
+				content: sourceContent,
+				variables: true,
+				keyframes: true
+			})
+		])
+			.process(css, {
+				from: sourceCSS,
+				to: destinationCSS
+			})
+			.then(result => {
+				fs.writeFile(destinationCSS, result.css, () => true)
+				if ( result.map ) {
+					fs.writeFile(destinationCSS + '.map', result.map.toString(), () => true)
+				}
+			})
+			.catch(error => {
+				console.log(error)
+			});
+	})
+
+
+	// Eleventy will move these files to the _site folder on built
 	eleventyConfig.addPassthroughCopy({"source/images": "images"});
 	eleventyConfig.addPassthroughCopy({"source/manifest.json": "manifest.json"});
 	eleventyConfig.addPassthroughCopy({"source/robots.txt": "robots.txt"});
-	eleventyConfig.addPassthroughCopy({"source/_includes/partial-css/bootstrap.css": "css/bootstrap.css"});
-	eleventyConfig.addPassthroughCopy({"source/_includes/partial-js/bootstrap.js": "js/bootstrap.js"});
 
+	// If you want to have a standalone css file for bootstrap, uncomment this line
+	// eleventyConfig.addPassthroughCopy({"source/_includes/partial-css/bootstrap.css": "css/bootstrap.css"});
+	eleventyConfig.addPassthroughCopy({"source/_includes/partial-js/bootstrap.js": "js/bootstrap.js"});
 
 
 	/* Markdown Overrides */
@@ -183,15 +252,6 @@ module.exports = function(eleventyConfig) {
 			"liquid"
 		],
 
-		// If your site lives in a different subdirectory, change this.
-		// Leading or trailing slashes are all normalized away, so don’t worry about those.
-
-		// If you don’t have a subdirectory, use "" or "/" (they do the same thing)
-		// This is only used for link URLs (it does not affect your file structure)
-		// Best paired with the `url` filter: https://www.11ty.dev/docs/filters/url/
-
-		// You can also pass this in on the command line using `--pathprefix`
-		// pathPrefix: "/",
 
 		markdownTemplateEngine: "liquid",
 		htmlTemplateEngine: "njk",

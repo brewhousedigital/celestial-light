@@ -3,7 +3,7 @@
 <div class="mb-5">
 	{% set postslist = collections.posts | head(-3) %}
 	{% set postslistCounter = collections.posts | length %}
-	{% include "source/pages/page-components/posts-list.njk" %}
+	{% include "source/pages/page-components/blog-listing-template.njk" %}
 </div>
 
-<p>More posts can be found in <a href="{{ '/posts/' | url }}">the archive</a>.</p>
+<p>More posts can be found in <a href="{{ '/posts/' | url }}">the blog archive</a>.</p>

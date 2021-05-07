@@ -3,5 +3,5 @@
 	{% set js %}
 	{% include "source/_includes/partial-js/scripts.js" %}
 	{% endset %}
-	{{ js | safe }}
+	{{ js | jsmin | safe }}
 </script>
