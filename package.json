@@ -14,15 +14,15 @@
     "url": "git://github.com/brewhousedigital/eleventy-site-template.git"
   },
   "author": {
-    "name": "Zach Leatherman",
-    "email": "zachleatherman@gmail.com",
-    "url": "https://zachleat.com/"
+    "name": "Zach Voss",
+    "email": "zachary.voss@gmail.com",
+    "url": "https://www.zachvoss.com/"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/11ty/eleventy-base-blog/issues"
+    "url": "https://github.com/brewhousedigital/celestial-light/issues"
   },
-  "homepage": "https://github.com/11ty/eleventy-base-blog#readme",
+  "homepage": "https://github.com/brewhousedigital/celestial-light#readme",
   "devDependencies": {
     "@11ty/eleventy": "^0.12.1",
     "@11ty/eleventy-navigation": "^0.1.6",
