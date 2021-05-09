@@ -170,7 +170,7 @@ module.exports = function(eleventyConfig) {
 
 	// Create a custom, purged, version of Bootstrap
 	let sourceCSS = "source/_includes/partial-css/_bootstrap.css";
-	let destinationCSS = "source/_includes/partial-css/_bootstrap-compiled.css";
+	let destinationCSS = "_site/css/bootstrap.css";
 	// Add in your file types here
 	let sourceContent = [
 		'source/**/*.njk',
@@ -194,10 +194,13 @@ module.exports = function(eleventyConfig) {
 				to: destinationCSS
 			})
 			.then(result => {
-				fs.writeFile(destinationCSS, result.css, () => true)
-				if ( result.map ) {
-					fs.writeFile(destinationCSS + '.map', result.map.toString(), () => true)
-				}
+				let newCSS = result.css;
+				let rebootCSS = fs.readFileSync("source/_includes/partial-css/_reboot.css");
+				let allCSS = rebootCSS + newCSS;
+
+				let compiledCSS = new MinifyCSS().minify(allCSS)['styles'];
+
+				fs.writeFile(destinationCSS, compiledCSS, () => true)
 			})
 			.catch(error => {
 				console.log(error)
