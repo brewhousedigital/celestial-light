@@ -28,6 +28,7 @@
 		"@11ty/eleventy-navigation": "^0.1.6",
 		"@11ty/eleventy-plugin-rss": "^1.1.1",
 		"@11ty/eleventy-plugin-syntaxhighlight": "^3.1.0",
+		"postcss": "^8.2.14",
 		"@fullhuman/postcss-purgecss": "^4.0.3",
 		"bootstrap-icons": "^1.4.0",
 		"clean-css": "^4.2.3",

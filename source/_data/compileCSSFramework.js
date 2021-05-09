@@ -5,6 +5,9 @@ This file needs to compile before 11ty finishes the site
 because the 11ty Watch command wont pick up on changed CSS
 tags inside your NJK files.
 This way, you can work locally and purge your CSS on the fly.
+
+To read more, check out this dev.to article:
+https://dev.to/brewhousedigital/using-purgecss-with-bootstrap-and-eleventy-j7p
 */
 
 const fs = require("fs");
@@ -18,10 +21,10 @@ module.exports = async function() {
 	if (!fs.existsSync('_site/css')){fs.mkdirSync('_site/css');}
 
 	// Create a custom, purged, version of Bootstrap
-	let sourceCSS = "source/_includes/partial-css/_bootstrap.css";
-	let destinationCSS = "_site/css/bootstrap.css";
+	const sourceCSS = "source/_includes/partial-css/_bootstrap.css";
+	const destinationCSS = "_site/css/bootstrap.css";
 	// Add in your file types here
-	let sourceContent = [
+	const sourceContent = [
 		'source/**/*.njk',
 		'source/**/*.html',
 		'source/**/*.md',
@@ -31,7 +34,7 @@ module.exports = async function() {
 
 	fs.readFile(sourceCSS, (err, css) => {
 		postCSS([
-			// Purge CSS will scan through and remove the styles that arent in your files
+			// Purge CSS will scan through and remove the styles that aren't in your project
 			purgeCSS({
 				content: sourceContent,
 				variables: true,
@@ -43,12 +46,15 @@ module.exports = async function() {
 				to: destinationCSS
 			})
 			.then(result => {
+				// Combine with Reboot
 				let newCSS = result.css;
-				let rebootCSS = fs.readFileSync("source/_includes/partial-css/_reboot.css");
+				let rebootCSS = fs.readFileSync('source/_includes/partial-css/_reboot.css');
 				let allCSS = rebootCSS + newCSS;
 
+				// Minify
 				let compiledCSS = new MinifyCSS().minify(allCSS)['styles'];
 
+				// Save
 				fs.writeFileSync(destinationCSS, compiledCSS, {encoding:"utf8"})
 			})
 			.catch(error => {

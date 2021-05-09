@@ -279,6 +279,14 @@ ___
 [https://mozilla.github.io/nunjucks/templating.html](https://mozilla.github.io/nunjucks/templating.html)
 
 
+### Minifying Javascript in Production
+[https://dev.to/brewhousedigital/minifying-js-in-eleventy-on-production-1848](https://dev.to/brewhousedigital/minifying-js-in-eleventy-on-production-1848)
+
+
+### Using PurgeCSS with Bootstrap and Eleventy
+[https://dev.to/brewhousedigital/using-purgecss-with-bootstrap-and-eleventy-j7p](https://dev.to/brewhousedigital/using-purgecss-with-bootstrap-and-eleventy-j7p)
+
+
 ### Icons
 Need to generate manifest/favicon icons for your site?
 
