@@ -73,7 +73,7 @@ Contains all of your project files
 ___
 
 #### ✳ _data
-You can create JSON files in here to be used as APIs. Example, a repeated list of animal names can be looped over in your nunjucks files. Any JSON file inside of _data is automatically picked up and assigned a key based on its name. Try to name your files in camelcase to avoid any issues in the nunjucks loops. Something like `animalNames` is fine but `animal-names` may not work
+You can create JSON files in here to be used as APIs. Example, a repeated list of animal names can be looped over in your nunjucks files. Any JSON file inside the _data is automatically picked up and assigned a key based on its name. Try to name your files in camelcase to avoid any issues in the nunjucks loops. Something like `animalNames` is fine but `animal-names` may not work
 
 ─`animals.json`
 ```json
@@ -109,7 +109,7 @@ The includes folder contains a couple of different sub-folders that help structu
 ##### 🅾 layouts
 You can define how the overall look of your site appears using the `layouts` folder. There is a base template that includes your `<html>` , `<head>`, and `<body>` tags, but other than that, you are free to make as many site-themes as you want. You can create a custom view for unauthenticated users, and a totally different view for authenticated users. You can even cascade themes together. A good example of this is the `post.njk` layout also references the `base.njk` layout so that you don't have to write redundant code.
 
-This templating system achieves this using YAML. You can see at the top of most files, they start with three dashes, and end with three dashes. Everything inside of this section is YAML. The `post.njk` layout references the `base.njk` layout this way.
+This templating system achieves this using YAML. You can see at the top of most files, they start with three dashes, and end with three dashes. Everything inside this section is YAML. The `post.njk` layout references the `base.njk` layout this way.
 
 ```yaml
 ---
@@ -120,11 +120,11 @@ permalink: /posts/{{ title|slugURL }}-{{ date|slugURL }}/
 It also generates a dynamic URL based on the blog post title and the current date. This sort of follows how the Medium blog site publishes their content.
 
 ##### 🅾 partial-css
-This is kind of like SASS/LESS but you can use plain CSS if you want. Adding in SASS support is easy but not built in by default. The framework allows for you to create multiple CSS files and then it will compile them all and minify them for you all behind the scenes.
+This is kind of like SASS/LESS, but you can use plain CSS if you want. Adding in SASS support is easy but not built in by default. The framework allows for you to create multiple CSS files, and then it will compile them all and minify them for you all behind the scenes.
 
 Setting up a new partial is easy!
 
-Step 1) Create a new CSS file inside the `partial-css` folder. Lets call this one `agency.css`.
+Step 1) Create a new CSS file inside the `partial-css` folder. Let's call this one `agency.css`.
 ```css
 #agency-body {
   background-color: lightcoral;
@@ -160,7 +160,7 @@ You'll learn what this whole file means later in the documentation. Just know th
 ##### 🅾 partial-js
 Much like the CSS setup above, the `partial-js` folder functions exactly the same. You can add partial javascript files and then add them to your footer via the `includes` function from nunjucks.
 
-One difference is that your javascript is not minified by default when working locally. The Terser library is not very fast, so enabling JS minification in local would add a few seconds to every file change you did. Instead, we have an environment variable set so you can enable this only in production. If you need help setting up environment variables on Netlify, you can follow the instructions on this Dev.to article: [🤖Minifying JS in Eleventy on production](https://dev.to/brewhousedigital/minifying-js-in-eleventy-on-production-1848). All of this code is already set up from the tutorial, so the only thing you'll need to do is add the environment secret to Netlify.
+One difference is that your javascript is not minified by default when working locally. The Terser library is not very fast, so enabling JS minification in local would add a few seconds to every file change you did. Instead, we have an environment variable set, so you can enable this only in production. If you need help setting up environment variables on Netlify, you can follow the instructions on this Dev.to article: [🤖Minifying JS in Eleventy on production](https://dev.to/brewhousedigital/minifying-js-in-eleventy-on-production-1848). All of this code is already set up from the tutorial, so the only thing you'll need to do is add the environment secret to Netlify.
 
 Create your javascript partial files in the Partial JS folder:
 
@@ -257,14 +257,14 @@ Attributes like the `date` are used to organize and sort the blog posts. The dat
 
 The `tags` system is the only thing that needs to be watched for. If you ever try to re-indent the lines of code in your file, sometimes the IDE can remove the spacing on the category, which will cause the tags to be discarded during the build. Each tag (or category) needs to have 2 spaces, a dash, then the name of the category in quotes.
 
-Each post will automatically have its permalink set using the title and the date published. You can alter this in the post template found here: `source/_includes/layouts/post.njk`.
+Each post will automatically have its permalink set using the title and the published date. You can alter this in the post template found here: `source/_includes/layouts/post.njk`.
 
 ___
 
 ### ⏹ _site
 This is where your compiled code is saved. This is what Netlify picks up and deploys live. All of your static files are put into this folder. Don't touch this code because it gets overwritten every time the site is built.
 
-If you ever see an error on your local site, and you aren't sure where its coming from, sometimes you can fix it by stopping the local server, deleting the entire `_site` folder, and then rerunning the build command. This way it creates a brand-new folder for you.
+If you ever see an error on your local site, and you aren't sure where it's coming from, sometimes you can fix it by stopping the local server, deleting the entire `_site` folder, and then rerunning the build command. This way it creates a brand-new folder for you.
 ___
 
 
