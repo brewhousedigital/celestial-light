@@ -141,17 +141,12 @@ Ok, so our agency css is done, and now we need to add it to this file:
 
 `source/_includes/site-components/head-css-tags.njk`
 
-You will already see a couple of css files already being loaded. Towards the end, after bootstrap, you can add the new css file via an `include` function that's built into nunjucks. Make sure to add it before the `{% endset %}` tag. Here is a full example of what the file might look like. Starting at the top is the Reboot library (for cross browser support), Bootstrap, a custom styles.css file, and the new agency css file.
+In the example below: starting at the top is the Bootstrap library, a *partial* styles.css file, and the new agency css *partial* file. Everything placed inside the `{% set css %}...{% endset %}` will be combined, minified, and placed inline on your page. You can add the new css file via an `include` function that's built into nunjucks. Make sure to add it before the `{% endset %}` tag.
 
 ```html
+<link href="/css/bootstrap.css" rel="stylesheet">
 <style>
   {% set css %}
-  {# Reboot Library #}
-  {% include "source/_includes/partial-css/_reboot.css" %}
-
-  {# Compiled Bootstrap Library using PurgeCSS #}
-  {% include "source/_includes/partial-css/_bootstrap-compiled.css" %}
-
   {# Custom site styles #}
   {% include "source/_includes/partial-css/styles.css" %}
   {% include "source/_includes/partial-css/agency.css" %}
@@ -165,7 +160,17 @@ You'll learn what this whole file means later in the documentation. Just know th
 ##### 🅾 partial-js
 Much like the CSS setup above, the `partial-js` folder functions exactly the same. You can add partial javascript files and then add them to your footer via the `includes` function from nunjucks.
 
-One difference is that your javascript is not minified by default when working locally. The Terser library is not very fast, so enabling JS minification in local would add a few seconds to every file change you did. Instead, we have an environment variable set so you can enable this only in production. If you need help setting up environment variables on Netlify, you can follow the instructions on this Dev.to article: [🤖Minifying JS in Eleventy on production](https://dev.to/brewhousedigital/minifying-js-in-eleventy-on-production-1848)
+One difference is that your javascript is not minified by default when working locally. The Terser library is not very fast, so enabling JS minification in local would add a few seconds to every file change you did. Instead, we have an environment variable set so you can enable this only in production. If you need help setting up environment variables on Netlify, you can follow the instructions on this Dev.to article: [🤖Minifying JS in Eleventy on production](https://dev.to/brewhousedigital/minifying-js-in-eleventy-on-production-1848). All of this code is already set up from the tutorial, so the only thing you'll need to do is add the environment secret to Netlify.
+
+Create your javascript partial files in the Partial JS folder:
+
+`source/_includes/partial-js/my-custom-modal-function.js`
+
+```javascript
+document.querySelector("body").addEventListener("click", function() {
+    alert("This is my new modal");
+});
+```
 
 You can find all the javascript file references here:
 
@@ -184,7 +189,7 @@ You can add any files inside the `{% set js %}...{% endset %}` tag to have them 
 </script>
 ```
 
-P.s. if you dont need any of the javascript bootstrap functionality, feel free to comment out the bootstrap library reference.
+P.s. if you don't need any of the bootstrap javascript functionality, feel free to comment out the bootstrap library reference to speed up your site.
 
 ##### 🅾 site-components
 
@@ -248,20 +253,31 @@ tags:
 
 The first thing that gets declared is the `layout` key. This lets the post know that this should use the `post.njk` template when it is compiled. If you need to alter that template, you can go into `source/_includes/layouts/post.njk`.
 
-Attributes like the `date` are used to organize and sort the blog posts. The date value must be structured like `YYYY-MM-DD`. You can use Luxon, or any other date library to pretty-print that if you ever need.
+Attributes like the `date` are used to organize and sort the blog posts. The date value must be structured like `YYYY-MM-DD`. You can use Luxon, or any other date library to pretty-print that on your post content if you ever need.
 
-The `tags` system is the only thing that needs to be watched for. If you ever try to re-indent the lines of code in your file, sometimes it can remove the spacing on the category, which will cause the tags to be discarded during compile time. Each tag (or category) needs to have 2 spaces, a dash, then the name of the category in quotes.
+The `tags` system is the only thing that needs to be watched for. If you ever try to re-indent the lines of code in your file, sometimes the IDE can remove the spacing on the category, which will cause the tags to be discarded during the build. Each tag (or category) needs to have 2 spaces, a dash, then the name of the category in quotes.
+
+Each post will automatically have its permalink set using the title and the date published. You can alter this in the post template found here: `source/_includes/layouts/post.njk`.
 
 ___
 
 ### ⏹ _site
-This is where your compiled code is output to. This is what Netlify picks up and deploys live. All of your static files are put into this folder. Don't touch this code because it gets overwritten every time the site is built.
+This is where your compiled code is saved. This is what Netlify picks up and deploys live. All of your static files are put into this folder. Don't touch this code because it gets overwritten every time the site is built.
 
 If you ever see an error on your local site, and you aren't sure where its coming from, sometimes you can fix it by stopping the local server, deleting the entire `_site` folder, and then rerunning the build command. This way it creates a brand-new folder for you.
 ___
 
 
 ## Bonus materials
+
+### 11ty Documentation
+[https://www.11ty.dev/docs/](https://www.11ty.dev/docs/)
+
+
+### Nunjucks Templating API
+
+[https://mozilla.github.io/nunjucks/templating.html](https://mozilla.github.io/nunjucks/templating.html)
+
 
 ### Icons
 Need to generate manifest/favicon icons for your site?
