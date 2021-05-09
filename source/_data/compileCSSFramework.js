@@ -13,6 +13,10 @@ const postCSS = require('postcss');
 const purgeCSS = require('@fullhuman/postcss-purgecss');
 
 module.exports = async function() {
+	// You must create the folder structure first. WriteFile does not create files if parent folders are missing
+	if (!fs.existsSync('_site')){fs.mkdirSync('_site');}
+	if (!fs.existsSync('_site/css')){fs.mkdirSync('_site/css');}
+
 	// Create a custom, purged, version of Bootstrap
 	let sourceCSS = "source/_includes/partial-css/_bootstrap.css";
 	let destinationCSS = "_site/css/bootstrap.css";
