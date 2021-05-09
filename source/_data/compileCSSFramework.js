@@ -13,11 +13,9 @@ const postCSS = require('postcss');
 const purgeCSS = require('@fullhuman/postcss-purgecss');
 
 module.exports = async function() {
-	console.log( "Fetching new github stargazers count…" );
-
 	// Create a custom, purged, version of Bootstrap
 	let sourceCSS = "source/_includes/partial-css/_bootstrap.css";
-	let destinationCSS = "_site/css/bootstrap-2.css";
+	let destinationCSS = "_site/css/bootstrap.css";
 	// Add in your file types here
 	let sourceContent = [
 		'source/**/*.njk',

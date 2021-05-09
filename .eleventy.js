@@ -11,8 +11,6 @@ const markdownItAnchor = require("markdown-it-anchor");
 require('dotenv').config();
 const MinifyCSS = require("clean-css");
 const slugify = require("slugify");
-const postCSS = require('postcss');
-const purgeCSS = require('@fullhuman/postcss-purgecss');
 const { minify } = require("terser");
 
 
@@ -166,46 +164,6 @@ module.exports = function(eleventyConfig) {
 			callback(null, code);
 		}
 	});
-
-
-	// Create a custom, purged, version of Bootstrap
-	let sourceCSS = "source/_includes/partial-css/_bootstrap.css";
-	let destinationCSS = "_site/css/bootstrap.css";
-	// Add in your file types here
-	let sourceContent = [
-		'source/**/*.njk',
-		'source/**/*.html',
-		'source/**/*.md',
-		'source/**/*.liquid',
-		'source/**/*.js'
-	];
-
-	fs.readFile(sourceCSS, (err, css) => {
-		postCSS([
-			// Purge CSS will scan through and remove the styles that arent in your files
-			purgeCSS({
-				content: sourceContent,
-				variables: true,
-				keyframes: true
-			})
-		])
-			.process(css, {
-				from: sourceCSS,
-				to: destinationCSS
-			})
-			.then(result => {
-				let newCSS = result.css;
-				let rebootCSS = fs.readFileSync("source/_includes/partial-css/_reboot.css");
-				let allCSS = rebootCSS + newCSS;
-
-				let compiledCSS = new MinifyCSS().minify(allCSS)['styles'];
-
-				fs.writeFile(destinationCSS, compiledCSS, () => true)
-			})
-			.catch(error => {
-				console.log(error)
-			});
-	})
 
 
 	// Eleventy will move these files to the _site folder on built
